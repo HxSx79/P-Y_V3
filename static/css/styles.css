@@ -1,0 +1,234 @@
+:root {
+    --primary-color: #006064;
+    --success-color: #00C853;
+    --error-color: #D50000;
+    --border-color: #ccc;
+}
+
+body {
+    margin: 0;
+    padding: 15px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+.header {
+    background-color: white;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.header-logo {
+    height: 32px;
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 2px solid var(--border-color);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.system-status {
+    background-color: #E8F5E9;
+    padding: 5px 15px;
+    border-radius: 20px;
+    color: #00C853;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--error-color);
+}
+
+.status-indicator.connected {
+    background-color: var(--success-color);
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 15px;
+    height: calc(100vh - 100px);
+}
+
+.left-panel {
+    background-color: white;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.right-panel {
+    display: grid;
+    grid-template-rows: 1.15fr 1fr;
+    gap: 25px;
+    height: 100%;
+}
+
+.webcam-feed, .picture-box {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.webcam-feed {
+    height: 100%;
+}
+
+.picture-box {
+    height: 100%;
+}
+
+.webcam-feed img {
+    width: 100%;
+    height: calc(100% - 40px);
+    object-fit: contain;
+}
+
+.customer-info {
+    margin-bottom: 0;
+}
+
+.customer-section {
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    background-color: white;
+    font-size: 1.125rem;
+}
+
+.logo-box {
+    border: 1px solid var(--border-color);
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.logo-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    align-content: center;
+}
+
+.info-label {
+    font-weight: bold;
+}
+
+.detection-panels {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    flex: 1;
+}
+
+.latest-detections {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    overflow-y: auto;
+    background-color: white;
+    max-height: calc(100vh - 350px);
+}
+
+.latest-detections table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.latest-detections th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px;
+    position: sticky;
+    top: 0;
+}
+
+.latest-detections td {
+    padding: 8px;
+    text-align: center;
+}
+
+.stats-tables {
+    margin-top: 20px;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.stats-table th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px;
+}
+
+.stats-table td {
+    padding: 8px;
+    text-align: center;
+}
+
+.detection-status {
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 30px);
+    background-color: white;
+}
+
+.status-box {
+    padding: 80px 40px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+.status-box.status-ok {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.status-box.status-nok {
+    background-color: var(--error-color);
+    color: white;
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Time Detection – Poka Yoke</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <img src="{{ url_for('static', filename='images/decatur-logo.png') }}" alt="Decatur Logo" class="header-logo">
+            <h1>Real Time Objection Detection – Poka Yoke</h1>
+        </div>
+        <div class="system-status">
+            <span class="status-indicator" id="camera-status"></span>
+            System Active
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="left-panel">
+            <div class="customer-info">
+                <div class="customer-section">
+                    <div class="logo-box">
+                        <img id="customer-logo" src="" alt="Customer Logo">
+                    </div>
+                    <div class="info-grid">
+                        <span class="info-label">CUSTOMER</span>
+                        <span id="customer-name">-</span>
+                        <span class="info-label">Program:</span>
+                        <span id="program-name">-</span>
+                        <span class="info-label">Part Number:</span>
+                        <span id="part-number">-</span>
+                        <span class="info-label">Part Description:</span>
+                        <span id="part-description">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detection-panels">
+                <div class="latest-detections">
+                    <h3>Latest Detections</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Time</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in range(10, 0, -1) %}
+                            <tr>
+                                <td>{{ 130 - i + 1 }}</td>
+                                <td>12:{{ 21 - i + 1 }}</td>
+                                <td>{{ "NOK" if i == 9 else "OK" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="stats-tables">
+                        <h4>Total Parts Inspected</h4>
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Week</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>130</td>
+                                    <td>12:21</td>
+                                    <td>OK</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Pass Rate</h4>
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Week</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>99.5%</td>
+                                    <td>98.5%</td>
+                                    <td>99.7%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="detection-status">
+                    <div class="status-box status-ok">
+                        <div>PART DETECTION</div>
+                        <div>OK</div>
+                    </div>
+                    <div class="status-box status-nok">
+                        <div>CLIP DETECTION</div>
+                        <div>NOK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="webcam-feed">
+                <h3>Live Camera Feed</h3>
+                <img src="{{ url_for('video_feed') }}" alt="Webcam feed" onload="updateCameraStatus(true)" onerror="updateCameraStatus(false)">
+            </div>
+            <div class="picture-box">
+                <h3>CAD Picture</h3>
+                <div id="captured-image"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCameraStatus(connected) {
+            const statusIndicator = document.getElementById('camera-status');
+            if (connected) {
+                statusIndicator.classList.add('connected');
+            } else {
+                statusIndicator.classList.remove('connected');
+            }
+        }
+
+        function updatePartInfo() {
+            fetch('/part_info')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('customer-name').textContent = data.customer;
+                    document.getElementById('program-name').textContent = data.program;
+                    document.getElementById('part-number').textContent = data.part_number;
+                    document.getElementById('part-description').textContent = data.description;
+                    
+                    // Update customer logo
+                    const logoPath = `/static/images/${data.customer.toLowerCase()}-logo.png`;
+                    document.getElementById('customer-logo').src = logoPath;
+                })
+                .catch(error => console.error('Error fetching part info:', error));
+        }
+
+        // Update part info every second
+        setInterval(updatePartInfo, 1000);
+    </script>
+</body>
+</html>
